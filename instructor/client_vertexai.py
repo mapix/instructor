@@ -131,8 +131,9 @@ def from_vertexai(
     ), "Client must be an instance of vertexai.generative_models.GenerativeModel"
 
     create = client.generate_content_async if _async else client.generate_content
+    ins_cls = instructor.AsyncInstructor if _async else instructor.Instructor
 
-    return instructor.Instructor(
+    return ins_cls(
         client=client,
         create=instructor.patch(create=create, mode=mode),
         provider=instructor.Provider.VERTEXAI,
